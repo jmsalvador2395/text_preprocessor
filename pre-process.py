@@ -3,7 +3,7 @@ from tqdm import tqdm
 if __name__ == '__main__':
 	count=0
 	num_lines = 2105324624
-	divisor=80
+	divisor=300
 	trgt_lines = int(num_lines/divisor)
 	src='en.txt'
 	trgt='train.txt'
@@ -13,8 +13,17 @@ if __name__ == '__main__':
 		#for line in f1:
 		for i in tqdm(range(trgt_lines)):
 			line=f1.readline()
-			data=re.sub('[.,!?\'\"-;:\]\[\{\}\(\)@–]', '', line.lower())
+
+			#replace numbers with num token
+			data=re.sub('[0123456789]+\.?[0123456789]+', '<num>', line.lower())
+
+			#remove all punctuation
+			data=re.sub('[.,!?\'\"-;:\]\[\{\}\(\)@–]', '', data)
+
+			#filter out unicode
 			data=data.encode('ascii', 'ignore').decode()
+
+			#strip the trailing and leading white space
 			data=data.strip()
 			f2.write(data)
 
