@@ -17,15 +17,18 @@ if __name__ == '__main__':
 			#replace numbers with num token
 			data=re.sub('[0123456789]+\.?[0123456789]+', '<num>', line.lower())
 
+			#replaces periods with a space
+			data=re.sub('[\.]', ' ', data)
+
 			#remove all punctuation
-			data=re.sub('[.,!?\'\"-;:\]\[\{\}\(\)@–]', '', data)
+			data=re.sub('[\$,!?\'\"-;:\]\[\{\}\(\)@–]<>', '', data)
 
 			#filter out unicode
 			data=data.encode('ascii', 'ignore').decode()
 
 			#strip the trailing and leading white space
 			data=data.strip()
-			f2.write(data)
+			f2.write(data + '\n')
 
 	f2.close()
 			
